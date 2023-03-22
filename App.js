@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import HomeScreen from './navigation/screens/HomeScreen';
+import SearchScreen from './navigation/screens/SearchScreen';
+import RecipeScreen from './navigation/screens/RecipeScreen';
+import FavoritesScreen from './navigation/screens/FavoritesScreen'; 
+import DrinksByCategoryScreen from './navigation/screens/DrinksByCategoryScreen';
+import CategoryScreen from './navigation/screens/CategoryScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+export default function App(){
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+        name = "Home"
+        component={HomeScreen}
+        />
+        <Stack.Screen
+        name = "SearchScreen"
+        component={SearchScreen}
+        />
+        <Stack.Screen
+        name= "RecipeScreen"
+        component={RecipeScreen}
+        />
+        <Stack.Screen
+        name = "FavoritesScreen"
+        component={FavoritesScreen}
+        />
+        <Stack.Screen 
+        name = "DrinksByCategoryScreen"
+        component={DrinksByCategoryScreen}
+       />
+       <Stack.Screen
+       name = "CategoryScreen"
+       component={CategoryScreen}
+       />
+      </Stack.Navigator>
+    
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
