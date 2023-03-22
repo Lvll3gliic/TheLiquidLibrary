@@ -1,11 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image} from 'react-native';
+import { getCategoryList, getFullInfoById, getRandomDrink, getCocktailsByName, getCocktailsByCategory }  from '../api/api';
 import React, { useState, useEffect } from 'react';
 
 
 
 const App = () => {
-  
+  const [categories, setCategories] = useState([]);
+  const [fullInfo, setFullInfo] = useState([]);
+  const [randomDrink, setRandomDrink] = useState([]);
+  const [cocktailByName, setCocktailsByName] = useState([]); 
+  const [cocktailsByCategory, setCocktailByCategory] = useState([]); 
   useEffect(() => {
     
     getCategoryList()
