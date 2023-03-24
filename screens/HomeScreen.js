@@ -39,7 +39,10 @@ let imageUrl = fullInfo.strDrinkThumb;
           <View style={styles.ingredientsContainer}>
             <Text style={styles.ingredient}>{fullInfo.strIngredient1}</Text>
             <Text style={styles.ingredient}>{fullInfo.strIngredient2}</Text>
-            <Text style={styles.ingredient}>{fullInfo.strIngredient3}</Text>
+            {
+            ( fullInfo.strIngredient3 != null &&
+              <Text style={styles.ingredient}>{fullInfo.strIngredient3}</Text>
+            )}
           </View>
 
             <ButtonH
