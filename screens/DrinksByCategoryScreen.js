@@ -1,32 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image} from 'react-native';
-import { getCategoryList, getFullInfoById }  from '../api/api';
+import { getCocktailsByCategory }  from '../api/api';
 import React, { useState, useEffect } from 'react';
+import MainHeader from '../components/MainHeader';
+import SearchMasonry from '../components/search/SearchMasonry';
 
 
 
-const App = () => {
+const App = ({navigation,route}) => {
+  const {category} = route.params;
   const [categories, setCategories] = useState([]);
   const [fullInfo, setFullInfo] = useState([]);
+  const [cocktailsByCategory, setCocktailByCategory] = useState([]); 
   useEffect(() => {
-    
-    getCategoryList()
-    .then(categories => setCategories(categories))
-    .catch(error=>console.log(error));
-
-    getFullInfoById(11007)
-      .then(fullInfo => setFullInfo(fullInfo))
-      .catch(error => console.log(error));
-  }, [cocktailId = 11007]);
-
+    getCocktailsByCategory(category)
+    .then(drinks => setCocktailByCategory(drinks))
+    .catch(error => console.log(error))
+  
+  }, []);
   return (
-      <View>
-        <Text>test</Text>
-        <Text>{fullInfo.strDrink}</Text>
-        <Text>{fullInfo.strCategory}</Text>
-        <Text>{fullInfo.strInstructions}</Text>
+      <View style={styles.container}>
+      <MainHeader title="Cocktails"/>
+      <SearchMasonry list={cocktailsByCategory} />
       </View>
     );
   };
-
+  const styles = StyleSheet.create({
+    container:{
+      flex: 1,
+    },
+  })
 export default App;

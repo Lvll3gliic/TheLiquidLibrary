@@ -40,6 +40,7 @@ export const getCocktailsByName = async (name) =>{
         return console.log(error)
     }
 }
+
 export const getCocktailsByCategory = async (category) =>{
 
     try {
