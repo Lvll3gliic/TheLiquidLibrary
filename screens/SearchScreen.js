@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, View , Image, Button, TextInput} from 'react-native';
-import React, { useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect} from 'react';
 import Tabs from '../components/search/Tabs'
 import SearchMasonry from '../components/search/SearchMasonry';
 import { getCocktailsByName } from '../api/api';
@@ -8,6 +8,11 @@ import MainHeader from '../components/MainHeader';
 import {colors, spacing, sizes, shadow} from '../constants/theme';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+
+const filterCocktailsByAlcohol = (cocktails, alc) => {
+  const filteredCocktails = cocktails.filter(cocktail => cocktail.strAlcoholic === alc);
+  return filteredCocktails;
+}
 const SearchScreen = () => {
   const tabs=[
     {
@@ -16,22 +21,27 @@ const SearchScreen = () => {
     },
     {
       title:"Alcoholic",
-      content: ()=><SearchMasonry list={cocktailByName} />
+      content: ()=><SearchMasonry list={alcCoctails} />
     },
     {
       title:"Non-alcoholic",
-      content: ()=><SearchMasonry list={cocktailByName} />
+      content: ()=><SearchMasonry list={nonAlcCocktails} />
     }
   ]
-  const filterCocktailsByIngredient = (cocktails, alc) => {
-    const filteredCocktails = cocktails.filter(cocktail => cocktail.strAlcoholic === alc);
-    return filteredCocktails;
-  }
+  
   const [cocktailByName, setCocktailsByName] = useState([]);
+  const [alcCoctails, setAlcCocktails] = useState([]);
+  const [nonAlcCocktails, setNonAlcCocktails] = useState([]);
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
   const [search, setSearch] = useState('');
   const [test, setTest] = useState('');
   const [showError, setShowError] = useState(false);
+  const [text, setText] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+
+  const delay = 1000; // delay in milliseconds
+  const timeoutIdRef = useRef(null);
   const handleSearch=({value})=>{
    
     getCocktailsByName(`${value}`)
@@ -39,10 +49,14 @@ const SearchScreen = () => {
       if(drinks && drinks.length >0){
         setShowError(false);
         setCocktailsByName(drinks)
+        setAlcCocktails(filterCocktailsByAlcohol(drinks, 'Alcoholic'))
+        setNonAlcCocktails(filterCocktailsByAlcohol(drinks, 'Non alcoholic'))
+        console.log(drinks[0].strAlcoholic)
+        console.log(nonAlcCocktails)
         
       }else{
         setShowError(true);
-        console.log("neatrada")
+        console.log("neatrada" + value)
       }
     })
     .catch(error => console.log(error))  
@@ -53,7 +67,16 @@ const SearchScreen = () => {
 
   }, []);
 
- 
+  const handleInputChange = (text) => {
+    setText(text);
+    clearTimeout(timeoutIdRef.current);
+    timeoutIdRef.current = setTimeout(() => {
+      handleSearch({ value: text });
+    }, delay);
+  };
+  const handleMenuPress = () => {
+    setMenuOpen(!menuOpen); // toggle the tabs visibility
+  };
   return (
     <View style={styles.container}>
       
@@ -61,26 +84,20 @@ const SearchScreen = () => {
       <View style={styles.container1}>
         <View style={styles.inner}>
             <View style={styles.search} pointerEvents="none">
-                <Ionicons name= 'menu' size={25} />
+                <Ionicons name= 'search' size={25} />
             </View>
             <TextInput 
             style={styles.field} 
             placeholder="Search" 
-            value={search}
-            onChangeText={setSearch}/>
+            value={text}
+            onChangeText={handleInputChange}/>
         <View style={styles.filter}>
-                <Ionicons name= 'search' size={25} onPress={() => {
-                  handleSearch({value: search})
-                  
-                }} />
+                <Ionicons name= 'menu' size={25} onPress={handleMenuPress}/>
           </View>
         </View>
     </View>
-    {showError ? (
-        <Text>No results found.</Text>
-      ) :(
-      <Tabs items={tabs} onSelect={setSelectedTab}/>
-  
+    {menuOpen && (
+        <Tabs items={tabs} onSelect={setSelectedTab} />
       )}
     </View>
     );

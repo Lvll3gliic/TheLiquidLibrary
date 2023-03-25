@@ -6,17 +6,28 @@ import {StatusBar} from 'react-native';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import RecipeScreen from '../screens/RecipeScreen';
 import DrinksByCategoryScreen from '../screens/DrinksByCategoryScreen'
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 const Stack = createSharedElementStackNavigator();
 
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <StatusBar hidden />
-      <Stack.Navigator>
+      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content"  />
+      <Stack.Navigator
+       initialRouteName="Login"
+      >
+        <Stack.Screen
+        name="Login"
+        component={LoginScreen}/>
+        <Stack.Screen
+        name="Register"
+        component={RegisterScreen}/>
         <Stack.Screen
           name="Root"
           component={TabNavigator}
+          
           options={{
             headerShown: false,
             useNativeDriver: true,
