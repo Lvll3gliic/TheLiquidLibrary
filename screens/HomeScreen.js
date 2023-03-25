@@ -87,7 +87,7 @@ let imageUrl = fullInfo.strDrinkThumb;
       width: 250,
       height: 250,
       marginBottom: 24,
-      borderRadius: 5,
+      borderRadius: 10,
     },
     drinkName: {
       fontSize: 40,
