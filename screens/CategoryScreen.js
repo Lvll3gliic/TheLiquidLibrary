@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react';
 import MainHeader from '../components/MainHeader';
+import CategoryList from '../components/category/CategoryList';
 
 
 
@@ -14,24 +15,23 @@ const App = () => {
   
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    
     getCategoryList()
     .then(categories => setCategories(categories))
     .catch(error=>console.log(error));
   }, []);
 
   return (
-      <View>
-        <MainHeader title="Category"/>
-        <Text>CATEGORY SCREEN </Text>
-        <Text>rn its passing "cocktail" as a category</Text>
-        <Ionicons name= 'remove-circle' size={100} onPress={() => {
-                  navigation.navigate('DrinksByCategoryScreen', { category: category});
-                  
-                }} />
+      <View style={styles.container}>
+      <MainHeader title="Categories"/>
+      <CategoryList list={categories} />
       </View>
     );
   };
+  const styles = StyleSheet.create({
+    container:{
+      flex: 1,
+    },
+  })
 
 
 
