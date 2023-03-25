@@ -1,8 +1,9 @@
   import { StatusBar } from 'expo-status-bar';
-  import { StyleSheet, Text, View , Image,FlatList,ScrollView} from 'react-native';
+  import { StyleSheet, Text, View , Image,ScrollView,Platform} from 'react-native';
   import { getCategoryList, getFullInfoById }  from '../api/api';
   import React, { useState, useEffect } from 'react';
   import MainHeader from '../components/MainHeader';
+  import HeartButton from '../components/button/HeartButton';
 
 
 
@@ -17,36 +18,48 @@
 
     function IngredientsList({ ingredients }) {
       return (
-        <View>
-          <FlatList 
-            style={styles.ingr}
-            data={ingredients}
-            renderItem={({ item }) => <Text>{item}</Text>}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
+        <ScrollView style={styles.ingr}>
+          {ingredients.map((item, index) => (
+            <Text key={index.toString()}>{item}</Text>
+          ))}
+        </ScrollView>
       );
     }
-
+    
     // koda daļa kas savāc visus ingredients un to daudzumu kas nepieciešams priekš dzēriena
     const ingredients = [];
     for(let i = 0;i < 15; i++){
       const ingredient = fullInfo[`strIngredient${i}`];  
-      const measure = fullInfo[`strMeasure${i}`];  
+      const measure = convertOuncesToMl(fullInfo[`strMeasure${i}`]);  
 
       if(ingredient && measure) {
-        ingredients.push(ingredient + " - " + measure)
+        ingredients.push(ingredient + " - " + measure + " ml")
       }
+    }
+
+    function convertOuncesToMl(ounces) {
+      const numOunces = parseFloat(ounces);
+    
+      if (isNaN(numOunces)) {
+        return null; 
+      }
+      const ml = numOunces * 29.5735;
+    
+      return Math.round(ml * 100) / 100;
     }
 
 
     let imageUrl = fullInfo.strDrinkThumb;
+
     return (
+
       <View>
           <MainHeader title="Recipe"/>
+          
           <ScrollView style={styles.container} >
         
         <View>
+
           <Text style={styles.drinkName}>{fullInfo.strDrink}</Text>
             <View>
               <Image
@@ -60,10 +73,14 @@
 
           <Text style={styles.howTo} >HOW TO MAKE IT</Text>
           <Text style={styles.instruction}>{fullInfo.strInstructions}</Text>
+          
         </View>
        
       </ScrollView>
-        </View>
+      <View style={styles.buttonContainer}>
+            <HeartButton />
+          </View>
+    </View>
         
       );
     };
@@ -114,6 +131,14 @@
         padding: 5,
 
       },
+      buttonContainer: {
+        position: 'absolute',
+        top: Platform.OS === 'ios' ? 20: 1,
+        right: 10,
+        zIndex: 999,
+        padding: 10,
+      }
+
     });
 
 
