@@ -101,18 +101,20 @@
         borderRadius: 20
       },
       ingr: {
+        fontSize:20,
         textAlign: "center",
         alignSelf: 'center',
       },
       ingrText:{
-        padding: 15,
+        marginTop: 5,
+        marginBottom: 5,
         textAlign: "center",
         fontWeight: "bold",
         fontSize:20
       },
 
       howTo:{
-        marginTop: 15,
+        marginTop: 5,
         textAlign: "center",
         fontWeight: "bold",
         fontSize:20
