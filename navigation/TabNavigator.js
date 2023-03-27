@@ -7,7 +7,7 @@ import {StyleSheet, Animated} from 'react-native';
 import HomeNavigator from './HomeNavigator'
 import SearchNavigator from './SearchNavigator';
 import CategoryNavigator from './CategoryNavigator'
-import LoginScreen from '../screens/LoginScreen';
+
 
 const tabs = [
   {

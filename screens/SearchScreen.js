@@ -34,13 +34,12 @@ const SearchScreen = () => {
   const [nonAlcCocktails, setNonAlcCocktails] = useState([]);
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
   const [search, setSearch] = useState('');
-  const [test, setTest] = useState('');
   const [showError, setShowError] = useState(false);
   const [text, setText] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false);
+ 
 
 
-  const delay = 1000; // delay in milliseconds
+  const delay = 300; // delay in milliseconds
   const timeoutIdRef = useRef(null);
   const handleSearch=({value})=>{
    
@@ -50,10 +49,7 @@ const SearchScreen = () => {
         setShowError(false);
         setCocktailsByName(drinks)
         setAlcCocktails(filterCocktailsByAlcohol(drinks, 'Alcoholic'))
-        setNonAlcCocktails(filterCocktailsByAlcohol(drinks, 'Non alcoholic'))
-        console.log(drinks[0].strAlcoholic)
-        console.log(nonAlcCocktails)
-        
+        setNonAlcCocktails(filterCocktailsByAlcohol(drinks, 'Non alcoholic'))  
       }else{
         setShowError(true);
         console.log("neatrada" + value)
@@ -74,9 +70,6 @@ const SearchScreen = () => {
       handleSearch({ value: text });
     }, delay);
   };
-  const handleMenuPress = () => {
-    setMenuOpen(!menuOpen); // toggle the tabs visibility
-  };
   return (
     <View style={styles.container}>
       
@@ -91,14 +84,10 @@ const SearchScreen = () => {
             placeholder="Search" 
             value={text}
             onChangeText={handleInputChange}/>
-        <View style={styles.filter}>
-                <Ionicons name= 'menu' size={25} onPress={handleMenuPress}/>
-          </View>
+        
         </View>
     </View>
-    {menuOpen && (
-        <Tabs items={tabs} onSelect={setSelectedTab} />
-      )}
+      <Tabs items={tabs} onSelect={setSelectedTab} />
     </View>
     );
   };

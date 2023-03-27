@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View , Image} from 'react-native';
 import { getCocktailsByCategory }  from '../api/api';
 import React, { useState, useEffect } from 'react';

@@ -2,10 +2,8 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View ,Image} from 'react-native'
 import {auth} from '../components/firebase'
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
-import {db, database} from '../components/firebase'
-import { collection, getDocs, addDoc, doc, onSnapshot } from "firebase/firestore";
-import { set, ref, getDatabase} from 'firebase/database';
+import {signInWithEmailAndPassword} from 'firebase/auth'
+
 export const getActiveUserEmail = async () => {
   const user = await auth.currentUser;
   if (user) {
@@ -33,13 +31,7 @@ const LoginScreen = () => {
         signInWithEmailAndPassword(auth,email, password)
           .then(userCredentials => {
             const user = userCredentials.user;
-            const userId = user.uid;
-            const database = getDatabase();
-            const reference = ref(database, 'users/'+ userId)
-            set(reference, {
-              email: user.email, 
-              savedRecipesIds:["123"],
-            })
+            
             console.log('Logged in with:', user.email);
           })
           .catch(error => alert(error.message))

@@ -9,7 +9,7 @@ const FavoriteButton = ({active, style, onPress}) => {
       containerStyle={style}
       viewStyle={styles.view}
       onPress={onPress}
-      icon={active ? 'FavoriteFilled' : 'Favorite'}
+      name={active ? 'heart' : 'heart-outline'}
       size={24}
     />
   );

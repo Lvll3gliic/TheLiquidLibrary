@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, View , Image, ScrollView} from 'react-native';
-import { getCategoryList, getFullInfoById, getRandomDrink, getCocktailsByName, getCocktailsByCategory }  from '../api/api';
+import {getRandomDrink }  from '../api/api';
 import React, { useState, useEffect } from 'react';
 import MainHeader from '../components/MainHeader';
 import {useNavigation} from '@react-navigation/native';

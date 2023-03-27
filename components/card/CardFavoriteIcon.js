@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     top: 16,
-    right: 16,
-    zIndex: 10,
+    right: 14,
+    zIndex: 1,
   },
 });
 

@@ -1,17 +1,19 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button } from 'react-native';
 import Card from '../card/Card';
 import CardMedia from '../card/CardMedia';
 import CardContent from '../card/CardContent';
-import {spacing, sizes, colors} from '../../constants/theme';
-import CardFavoriteIcon from '../card/CardFavoriteIcon';
+import {spacing, sizes, colors,shadow} from '../../constants/theme';
 import {useNavigation} from '@react-navigation/native';
 import {SharedElement} from 'react-navigation-shared-element';
+
 
 
 const SearchCard = ({item, index}) => {
   const navigation = useNavigation();
   const even = index % 2 === 0;
+ 
+  
   return (
     <View
       
@@ -31,7 +33,7 @@ const SearchCard = ({item, index}) => {
           width: '100%',
           height: index % 3 === 0 ? 180 : 240,
         }}>
-        <CardFavoriteIcon onPress={() => {}} />
+
         <SharedElement style={styles.media}>
           <CardMedia source={item.strDrinkThumb} borderBottomRadius />
         </SharedElement>
@@ -52,15 +54,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize:parseInt(sizes.body),
+    fontSize:sizes.body,
     fontWeight: 'bold',
     color: colors.primary,
     marginVertical: 4,
   },
   titleBox: {
     flex: 1,
-  },
- 
+  }
 });
 
 export default SearchCard;

@@ -2,7 +2,7 @@
 import { StyleSheet, Text, View , Image, Button} from 'react-native';
 import { getCategoryList, getFullInfoById }  from '../api/api';
 import {useNavigation} from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+
 import React, { useState, useEffect } from 'react';
 import MainHeader from '../components/MainHeader';
 import CategoryList from '../components/category/CategoryList';

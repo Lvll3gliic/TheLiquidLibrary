@@ -1,9 +1,10 @@
-  import { StatusBar } from 'expo-status-bar';
+
   import { StyleSheet, Text, View , Image,ScrollView,Platform} from 'react-native';
-  import { getCategoryList, getFullInfoById }  from '../api/api';
-  import React, { useState, useEffect } from 'react';
+  import {  getFullInfoById }  from '../api/api';
+  import React, { useState, useEffect, } from 'react';
   import MainHeader from '../components/MainHeader';
   import HeartButton from '../components/button/HeartButton';
+  import { addToDatabase } from './FavoritesScreen';
 
 
 
@@ -78,7 +79,10 @@
        
       </ScrollView>
       <View style={styles.buttonContainer}>
-            <HeartButton />
+            <HeartButton onPress={()=>{
+              let id = fullInfo.idDrink
+              addToDatabase(id)
+            }}/>
           </View>
     </View>
         
@@ -135,7 +139,7 @@
       },
       buttonContainer: {
         position: 'absolute',
-        top: Platform.OS === 'ios' ? 20: 1,
+        top: Platform.OS === 'ios' ? 40: 1,
         right: 10,
         zIndex: 999,
         padding: 10,

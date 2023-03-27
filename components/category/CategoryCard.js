@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Card from '../card/Card';
-import { sizes, colors} from '../../constants/theme';
+import { colors} from '../../constants/theme';
 import {useNavigation} from '@react-navigation/native';
-import {SharedElement} from 'react-navigation-shared-element';
+
 
 
 const CategoryCard = ({item}) => {

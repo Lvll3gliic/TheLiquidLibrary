@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import {auth} from '../components/firebase'
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { set, ref, getDatabase} from 'firebase/database';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -26,6 +27,13 @@ const LoginScreen = () => {
             createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
               const user = userCredentials.user;
+              const userId = user.uid;
+              const database = getDatabase();
+              const reference = ref(database, 'users/'+ userId)
+              set(reference, {
+                email: user.email, 
+                savedRecipesIds:[],
+              })
             })
             .catch(error => alert(error.message))
         }else{
@@ -42,7 +50,15 @@ const LoginScreen = () => {
       style={styles.container}
       behavior="padding"
     >
+       <View style={styles.imageContainer}>
+      <Image 
+               source={require('../assets/1.png')}
+               style={styles.image}
+              />
+
+      </View>
       <View style={styles.inputContainer}>
+        
         <TextInput
           placeholder="Email"
           value={email}
@@ -123,5 +139,9 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontWeight: '700',
     fontSize: 16,
+  },
+  image:{
+    height: 150,
+    width: 400,
   },
 })
