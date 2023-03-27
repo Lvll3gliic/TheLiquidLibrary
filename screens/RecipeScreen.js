@@ -34,19 +34,24 @@
       const measure = convertOuncesToMl(fullInfo[`strMeasure${i}`]);  
 
       if(ingredient && measure) {
-        ingredients.push(ingredient + " - " + measure + " ml")
+        ingredients.push(ingredient + " - " + measure)
       }
     }
 
-    function convertOuncesToMl(ounces) {
-      const numOunces = parseFloat(ounces);
-    
-      if (isNaN(numOunces)) {
-        return null; 
+   
+    function convertOuncesToMl(ounces) { 
+      if(ounces != null){
+        if(ounces.includes("oz")){
+          const numOunces = parseFloat(ounces);
+        if (isNaN(numOunces)) {
+          return null; 
+        }
+        const ml = numOunces * 29.5735;
+        return Math.round(ml * 100) / 100 + " ml";
+      }else {
+          return ounces
+        }
       }
-      const ml = numOunces * 29.5735;
-    
-      return Math.round(ml * 100) / 100;
     }
 
 
